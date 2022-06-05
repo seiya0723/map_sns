@@ -1,0 +1,30 @@
+.content_area{
+    height:80vh;
+    overflow:auto;
+}
+
+.message_area{
+    display:flex;
+    padding:1rem;
+    margin:0.25rem 0;
+    border-radius:0.5rem;
+
+}
+.message_info{
+    background:deepskyblue;
+}
+.message_error{
+    background:crimson;
+    color:white;
+}
+
+
+.message_content{
+    width: calc(100% - 2rem);
+
+}
+.message_close{
+    width:2rem;
+    text-align:center;
+    cursor:pointer;
+}

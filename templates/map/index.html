@@ -1,0 +1,58 @@
+{% extends "map/base.html" %}
+
+
+{% block content %}
+    <input class="btn btn-primary" id="set_gps" type="button" value="位置情報を取得">
+
+
+    {% for message in messages %}
+    <div {% if message.tags %}class="message_area message_{{ message.tags }}"{% endif %}>
+        <div class="message_content">{{ message }}</div>
+        <div class="message_close"><i class="fas fa-times"></i></div>
+    </div>
+    {% endfor %}
+
+
+    <form class="my-4" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <select class="form-control" name="category">
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="row">
+            <div class="form-group col-sm-6"><input class="form-control" id="lat_input" type="text" name="lat" placeholder="緯度" required maxlength=9></div>
+            <div class="form-group col-sm-6"><input class="form-control" id="lon_input" type="text" name="lon" placeholder="経度" required maxlength=9></div>
+        </div>
+
+        <div class="custom-file">
+            <input id="photo_form" class="custom-file-input form-control" type="file" name="photo" required>
+        </div>
+
+
+        <textarea class="form-control" name="comment" placeholder="コメント"></textarea>
+
+        <input class="btn btn-outline-primary form-control" type="submit" value="投稿">
+    </form>
+
+    <form action="" method="GET">
+        <div class="input-group">
+            <input class="form-control" type="text" name="search" placeholder="キーワード検索" value="{{ request.GET.search }}">
+            <div class="input-group-append"><input class="btn btn-outline-primary" type="submit" value="検索"></div>
+        </div>
+
+    </form>
+
+    {% for place in places %}
+    <div class="border">
+        <div>{{ place.category.name }}:{{ place.comment }}</div>
+        {% if place.photo %}
+        <div><img src="{{ place.photo.url }}" alt="画像"></div>
+        {% endif %}
+        <a href="{% url 'map:reply' place.id %}">リプライ ( {{ place.reply_amount }}件 )</a>
+    </div>
+    {% endfor %}
+
+{% endblock %}
+

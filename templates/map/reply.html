@@ -1,0 +1,36 @@
+{% extends "map/base.html" %}
+
+{% block content %}
+
+    {% for place in places %}
+    <div class="border">
+        <div>{{ place.category.name }}</div>
+        <div>{{ place.comment }}</div>
+    </div>
+    {% endfor %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {# <input type="number" max="5" min="1" name="star"> #}
+
+        <select class="form-control" name="star">
+            <option value="1">★</option>
+            <option value="2">★★</option>
+            <option value="3">★★★</option>
+            <option value="4">★★★★</option>
+            <option value="5">★★★★★</option>
+        </select>
+
+        <textarea class="form-control" name="comment"></textarea>
+        <input class="form-control btn btn-outline-primary" type="submit" value="リプライする">
+    </form>
+
+    {% for reply in replies %}
+    <div class="border">
+        <div>星:{{ reply.star }}</div>
+        <div>{{ reply.comment }}</div>
+    </div>
+    {% endfor %}
+
+{% endblock %}
+
